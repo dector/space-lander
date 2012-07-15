@@ -31,8 +31,10 @@ package ua.org.dector.space_lander;
 import com.badlogic.gdx.Gdx;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.AbstractGame;
+import ua.org.dector.gcore.game.AbstractScreen;
 import ua.org.dector.gcore.utils.ResourceLoader;
 import ua.org.dector.space_lander.constants.Directories;
+import ua.org.dector.space_lander.screens.SplashScreen;
 
 /**
  * @author dector (dector9@gmail.com)
@@ -62,6 +64,8 @@ public class Lander extends AbstractGame {
         resLoader.setSoundsDirPath(Directories.SFX);
 
         restoreScreenSize();
+
+        setScreen(new SplashScreen(this));
     }
 
     private void restoreScreenSize() {
@@ -76,5 +80,10 @@ public class Lander extends AbstractGame {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public void setScreen(AbstractScreen screen) {
+        super.setScreen(screen);
+        Gdx.input.setInputProcessor(screen);
     }
 }

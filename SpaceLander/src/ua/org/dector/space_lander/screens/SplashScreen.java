@@ -26,68 +26,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.gcore.game;
+package ua.org.dector.space_lander.screens;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
+import ua.org.dector.gcore.game.AbstractScreen;
+import ua.org.dector.space_lander.Lander;
+
+import static com.badlogic.gdx.Input.Keys;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public abstract class
-        AbstractScreen<ConcreteGame extends AbstractGame>
-        implements Screen, InputProcessor {
-    protected ConcreteGame game;
-
-    public AbstractScreen(ConcreteGame game) {
-        this.game = game;
+public class SplashScreen extends AbstractScreen<Lander> {
+    public SplashScreen(Lander lander) {
+        super(lander);
     }
 
-    public void render(float delta) {}
-
-    public void resize(int width, int height) {}
-
-    public void show() {}
-
-    public void hide() {
-        dispose();
+    public void render(float delta) {
+        super.render(delta);
     }
-
-    public void pause() {}
-
-    public void resume() {}
-
-    public void dispose() {}
 
     public boolean keyDown(int keycode) {
-        return false;
-    }
+        switch (keycode) {
+            case Keys.ESCAPE: Gdx.app.exit(); break;
+        }
 
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    public boolean touchDown(int x, int y, int pointer, int button) {
-        return false;
-    }
-
-    public boolean touchUp(int x, int y, int pointer, int button) {
-        return false;
-    }
-
-    public boolean touchDragged(int x, int y, int pointer) {
-        return false;
-    }
-
-    public boolean touchMoved(int x, int y) {
-        return false;
-    }
-
-    public boolean scrolled(int amount) {
-        return false;
+        return true;
     }
 }
