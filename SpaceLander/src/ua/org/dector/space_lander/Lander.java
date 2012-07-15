@@ -28,11 +28,53 @@
 
 package ua.org.dector.space_lander;
 
+import com.badlogic.gdx.Gdx;
+import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.AbstractGame;
+import ua.org.dector.gcore.utils.ResourceLoader;
+import ua.org.dector.space_lander.constants.Directories;
 
 /**
  * @author dector (dector9@gmail.com)
  */
 public class Lander extends AbstractGame {
+    private static final String GAME_NAME = "SpaceLander";
+    public static final boolean DEV_MODE = true;
 
+    private Settings settings;
+
+    public void create() {
+        super.create();
+
+        settings = new Settings(GAME_NAME);
+
+        getMusicManager().setEnabled(settings.isMusicEnabled());
+        getMusicManager().setVolume(settings.getMusicVolume());
+
+        getSoundManager().setEnabled(settings.isSfxEnabled());
+        getSoundManager().setVolume(settings.getSfxVolume());
+
+        ResourceLoader resLoader = getResourceLoader();
+        resLoader.setImagesDirPath(Directories.IMAGES);
+        resLoader.setFontsDirPath(Directories.FONTS);
+        resLoader.setMusicDirPath(Directories.MUSIC);
+        resLoader.setParticlesDirPath(Directories.PARTICLES);
+        resLoader.setSoundsDirPath(Directories.SFX);
+
+        restoreScreenSize();
+    }
+
+    private void restoreScreenSize() {
+        Settings settings = getSettings();
+
+        int screenWidth     = settings.getScreenWidth();
+        int screenHeight    = settings.getScreenHeight();
+        boolean fullscreen  = settings.isFullscreen();
+
+        Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullscreen);
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
 }

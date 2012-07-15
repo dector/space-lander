@@ -26,29 +26,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander;
-
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import ua.org.dector.space_lander.constants.Labels;
+package ua.org.dector.space_lander.constants;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public class DesktopLauncher {
-    public static final int SCREEN_WIDTH = 320;
-    public static final int SCREEN_HEIGHT = 240;
-    public static final boolean FULLSCREEN = false;
-
-    public static void main(String[] args) {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.width        = SCREEN_WIDTH;
-        config.height       = SCREEN_HEIGHT;
-        config.fullscreen   = FULLSCREEN;
-        config.title        = Labels.TITLE;
-        config.resizable    = false;
-        config.useGL20      = false;
-
-        new LwjglApplication(new Lander(), config);
-    }
+public interface Directories {
+    public static final String DATA     = "data/";
+    public static final String IMAGES   = DATA + "images/";
+    public static final String FONTS    = DATA + "fonts/";
+    public static final String SFX      = DATA + "sfx/";
+    public static final String MUSIC    = DATA + "music/";
+    public static final String PARTICLES= DATA + "particles/";
 }

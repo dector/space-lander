@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander;
+package ua.org.dector.space_lander.constants;
 
 /**
  * @author dector (dector9@gmail.com)
