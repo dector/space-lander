@@ -35,19 +35,26 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import ua.org.dector.gcore.game.AbstractGame;
 
 /**
  * @author dector (dector9@gmail.com)
  */
 public class GraphicsImpl implements Graphics {
+    private static final String DEFAULT_SKIN = "default/skin.json";
+
     private SpriteBatch sb;
     private BitmapFont font;
+    private Skin skin;
 
     private GL10 gl10;
+    private AbstractGame game;
 
-    public GraphicsImpl() {
+    public GraphicsImpl(AbstractGame game) {
+        this.game = game;
+
         sb = new SpriteBatch();
-
         font = new BitmapFont();
 
         gl10 = Gdx.graphics.getGL10();
@@ -119,5 +126,19 @@ public class GraphicsImpl implements Graphics {
 
     public void setProjectionMatrix(Matrix4 matrix) {
         getSpriteBatch().setProjectionMatrix(matrix);
+    }
+
+    public Skin getSkin() {
+        if (skin == null)
+            skin = game.getResourceLoader().loadSkin(DEFAULT_SKIN);
+
+        return skin;
+    }
+
+    public void dispose() {
+        font.dispose();
+        sb.dispose();
+
+        if (skin != null) skin.dispose();
     }
 }

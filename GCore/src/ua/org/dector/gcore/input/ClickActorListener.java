@@ -26,55 +26,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.gcore.managers;
+package ua.org.dector.gcore.input;
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ActorEvent;
+import com.badlogic.gdx.scenes.scene2d.ActorListener;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public abstract class AudioManager {
-    public static final float MAX_VOLUME    = 1;
-    public static final float NORMAL_VOLUME = 0.5f;
-    public static final float MIN_VOLUME    = 0;
+public class ClickActorListener extends ActorListener {
+    private Actor actor;
 
-    private float volume;
-    private boolean enabled;
-
-    public AudioManager() {
-        this(MAX_VOLUME);
+    public ClickActorListener(Actor actor) {
+        this.actor = actor;
     }
 
-    public AudioManager(float volume) {
-        this(volume, true);
+    public boolean touchDown(ActorEvent event, float x, float y, int pointer, int button) {
+        return true;
     }
 
-    public AudioManager(float volume, boolean enabled) {
-        this.volume = volume;
-        this.enabled = enabled;
+    public void touchUp(ActorEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
 
-        init();
+        if (isOver(x, y)) onClick(button);
     }
 
-    protected abstract void init();
-
-    public float getVolume() {
-        return volume;
+    protected boolean isOver(float x, float y) {
+        return 0 <= x && x < actor.getWidth()
+                && 0 <= y && y < actor.getHeight();
     }
 
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void toggleMuted() {
-        setEnabled(!isEnabled());
-    }
-
-    public abstract void dispose();
+    protected void onClick(int button) {}
 }

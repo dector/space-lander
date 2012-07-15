@@ -32,10 +32,11 @@ package ua.org.dector.space_lander.constants;
  * @author dector (dector9@gmail.com)
  */
 public interface Directories {
-    public static final String DATA     = "data/";
+    public static final String DATA     =        "data/";
     public static final String IMAGES   = DATA + "images/";
     public static final String FONTS    = DATA + "fonts/";
     public static final String SFX      = DATA + "sfx/";
     public static final String MUSIC    = DATA + "music/";
     public static final String PARTICLES= DATA + "particles/";
+    public static final String SKINS    = DATA + "skins/";
 }

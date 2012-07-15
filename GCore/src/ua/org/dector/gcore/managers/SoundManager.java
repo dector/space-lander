@@ -88,7 +88,7 @@ public class SoundManager extends AudioManager {
         sounds.get(id).stop();
     }
 
-    public void disposeAll() {
+    public void dispose() {
         for (String id : sounds.keySet())
             sounds.get(id).dispose();
     }

@@ -52,7 +52,7 @@ public abstract class AbstractGame extends Game {
         musicManager = new MusicManager();
         resourceLoader = new ResourceLoader();
 
-        g = new GraphicsImpl();
+        g = new GraphicsImpl(this);
     }
 
     public SoundManager getSoundManager() {
@@ -69,5 +69,14 @@ public abstract class AbstractGame extends Game {
 
     public Graphics getGraphics() {
         return g;
+    }
+
+    public void dispose() {
+        super.dispose();
+
+        g.dispose();
+
+        musicManager.dispose();
+        soundManager.dispose();
     }
 }

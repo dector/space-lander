@@ -28,17 +28,49 @@
 
 package ua.org.dector.space_lander.screens;
 
-import ua.org.dector.gcore.game.AbstractScreen;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import ua.org.dector.gcore.game.TableScreen;
+import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.space_lander.Lander;
+import ua.org.dector.space_lander.constants.Labels;
 
 import static com.badlogic.gdx.Input.Keys;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public class SplashScreen extends AbstractScreen<Lander> {
-    public SplashScreen(Lander lander) {
+public class MainMenuScreen extends TableScreen<Lander> {
+    private static final int BUTTONS_WIDTH  = 300;
+    private static final int BUTTONS_HEIGHT = 60;
+
+    public MainMenuScreen(Lander lander) {
         super(lander);
+    }
+
+    public void show() {
+        super.show();
+
+        Skin skin = game.getGraphics().getSkin();
+        Button btnExit = new TextButton(Labels.EXIT, skin);
+        btnExit.addListener(new ClickActorListener(btnExit) {
+            protected void onClick(int button) {
+                if (button == Input.Buttons.LEFT)
+                    game.exit();
+            }
+        });
+
+        Table table = getTable();
+        if (Lander.DEV_MODE) {
+            table.debug();
+        }
+
+        table.add(Labels.TITLE).spaceBottom(BUTTONS_HEIGHT).uniform();
+        table.row();
+        table.add(btnExit).size(BUTTONS_WIDTH, BUTTONS_HEIGHT);
     }
 
     public boolean keyDown(int keycode) {

@@ -28,68 +28,67 @@
 
 package ua.org.dector.gcore.game;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public abstract class
-        AbstractScreen<ConcreteGame extends AbstractGame>
-        implements Screen, InputProcessor {
-    protected ConcreteGame game;
+public class StageScreen<ConcreteGame extends AbstractGame>
+        extends AbstractScreen<ConcreteGame> {
+    private Stage stage;
 
-    public AbstractScreen(ConcreteGame game) {
-        this.game = game;
+    public StageScreen(ConcreteGame concreteGame) {
+        super(concreteGame);
     }
 
     public void render(float delta) {
-        game.getGraphics().clear();
+        super.render(delta);
+        stage.act(delta);
+        stage.draw();
     }
 
-    public void resize(int width, int height) {}
-
-    public void show() {}
-
-    public void hide() {
-        dispose();
-    }
-
-    public void pause() {}
-
-    public void resume() {}
-
-    public void dispose() {}
-
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    public boolean touchDown(int x, int y, int pointer, int button) {
-        return false;
-    }
-
-    public boolean touchUp(int x, int y, int pointer, int button) {
-        return false;
-    }
-
-    public boolean touchDragged(int x, int y, int pointer) {
-        return false;
-    }
-
-    public boolean mouseMoved(int x, int y) {
-        return false;
+    public Stage getStage() {
+        if (stage == null) stage = new Stage();
+        return stage;
     }
 
     public boolean scrolled(int amount) {
-        return false;
+        return super.scrolled(amount)
+                | stage.scrolled(amount);
+    }
+
+    public boolean mouseMoved(int x, int y) {
+        return super.mouseMoved(x, y)
+                | stage.mouseMoved(x,y);
+    }
+
+    public boolean touchDragged(int x, int y, int pointer) {
+        return super.touchDragged(x, y, pointer)
+                | stage.touchDragged(x, y, pointer);
+    }
+
+    public boolean touchUp(int x, int y, int pointer, int button) {
+        return super.touchUp(x, y, pointer, button)
+                | stage.touchUp(x, y, pointer, button);
+    }
+
+    public boolean touchDown(int x, int y, int pointer, int button) {
+        return super.touchDown(x, y, pointer, button)
+                | stage.touchDown(x, y, pointer, button);
+    }
+
+    public boolean keyTyped(char character) {
+        return super.keyTyped(character)
+                | stage.keyTyped(character);
+    }
+
+    public boolean keyUp(int keycode) {
+        return super.keyUp(keycode)
+                | stage.keyUp(keycode);
+    }
+
+    public boolean keyDown(int keycode) {
+        return super.keyDown(keycode)
+                | stage.keyDown(keycode);
     }
 }

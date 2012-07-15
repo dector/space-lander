@@ -35,6 +35,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * @author dector (dector9@gmail.com)
@@ -45,6 +46,7 @@ public class ResourceLoader {
     private String soundsDirPath;
     private String musicDirPath;
     private String fontsDirPath;
+    private String skinsDirPath;
 
     public String getImagesDirPath() {
         return imagesDirPath;
@@ -86,6 +88,10 @@ public class ResourceLoader {
         this.fontsDirPath = fontsDirPath;
     }
 
+    public void setSkinsDirPath(String skinsDirPath) {
+        this.skinsDirPath = skinsDirPath;
+    }
+
     public Texture loadTexture(String image) {
         FileHandle file = Gdx.files.internal(imagesDirPath + image);
         return new Texture(file);
@@ -115,4 +121,15 @@ public class ResourceLoader {
         FileHandle imageFile = Gdx.files.internal(fontsDirPath + fontImg);
         return new BitmapFont(fontFile, imageFile, false);
     }
+
+    public Skin loadSkin(String skin) {
+        FileHandle skinFile = Gdx.files.internal(skinsDirPath + skin);
+        return new Skin(skinFile);
+    }
+
+    /*public Skin loadSkin(String skin, String skinTexture) {
+        FileHandle skinFile = Gdx.files.internal(skinsDirPath + skin);
+        FileHandle skinTextureFile = Gdx.files.internal(skinsDirPath + skinTexture);
+        return new Skin(skinFile, skinTextureFile);
+    }*/
 }

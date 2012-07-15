@@ -33,4 +33,6 @@ package ua.org.dector.space_lander.constants;
  */
 public interface Labels {
     public static final String TITLE = "Space Lander";
+
+    public static final String EXIT = "Exit";
 }

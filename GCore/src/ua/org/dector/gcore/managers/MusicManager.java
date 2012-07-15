@@ -83,7 +83,7 @@ public class MusicManager extends AudioManager {
             pause();
     }
 
-    public void disposeAll() {
+    public void dispose() {
         if (musicIsNull()) return;
 
         music.dispose();

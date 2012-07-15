@@ -31,6 +31,7 @@ package ua.org.dector.gcore.core;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * @author dector (dector9@gmail.com)
@@ -55,4 +56,7 @@ public interface Graphics {
 
     public void clear();
     public void setProjectionMatrix(Matrix4 matrix);
+    public Skin getSkin();
+
+    public void dispose();
 }
