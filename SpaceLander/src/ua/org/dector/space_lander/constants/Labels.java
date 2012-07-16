@@ -36,9 +36,16 @@ public interface Labels {
 
     public static final String OPTIONS$OPTIONS      = "Options";
     public static final String OPTIONS$EXIT         = "Exit";
+    public static final String OPTIONS$SAVE         = "Save";
+    public static final String OPTIONS$CANCEL       = "Cancel";
 
     public static final String OPTIONS$AUDIO        = "Audio";
     public static final String OPTIONS$GRAPHICS     = "Graphics";
     public static final String OPTIONS$CONTROLS     = "Controls";
     public static final String OPTIONS$BACK         = "Back";
+
+    public static final String OPTIONS$SFX_ENABLED  = "Enable SFX";
+    public static final String OPTIONS$SFX_VOLUME   = "SFX Volume";
+    public static final String OPTIONS$MUSIC_ENABLED= "Enable Music";
+    public static final String OPTIONS$MUSIC_VOLUME = "Music Volume";
 }

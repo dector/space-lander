@@ -72,7 +72,7 @@ public class MainMenuScreen extends TableScreen<Lander> {
         table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE);
         table.row();
         table.add(btnOptions).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
+                spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnExit).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).fill().uniform();
     }

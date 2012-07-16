@@ -75,7 +75,7 @@ public class OptionsScreen extends TableScreen<Lander> {
             }
         });
 
-        Button btnBack      = new TextButton(Labels.OPTIONS$BACK, skin);
+        Button btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
         btnBack.addListener(new ClickActorListener(btnBack) {
             protected void onClick(int button) {
                 if (button == Input.Buttons.LEFT)
@@ -86,13 +86,13 @@ public class OptionsScreen extends TableScreen<Lander> {
         table.add(Labels.OPTIONS$OPTIONS).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
         table.row();
         table.add(btnGraphics).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
+                spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnAudio).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
+                spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnControls).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
+                spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();

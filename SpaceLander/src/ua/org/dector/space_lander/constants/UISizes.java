@@ -36,5 +36,5 @@ public interface UISizes {
 
     public static final int BUTTONS_WIDTH       = 300;
     public static final int BUTTONS_HEIGHT      = 60;
-    public static final int BUTTON_BOTTOM_SPACE = 10;
+    public static final int BOTTOM_SPACE = 10;
 }
