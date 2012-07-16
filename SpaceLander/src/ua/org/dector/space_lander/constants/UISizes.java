@@ -31,14 +31,10 @@ package ua.org.dector.space_lander.constants;
 /**
  * @author dector (dector9@gmail.com)
  */
-public interface Labels {
-    public static final String TITLE = "Space Lander";
+public interface UISizes {
+    public static final int TITLE_BOTTOM_SPACE  = 60;
 
-    public static final String OPTIONS$OPTIONS      = "Options";
-    public static final String OPTIONS$EXIT         = "Exit";
-
-    public static final String OPTIONS$AUDIO        = "Audio";
-    public static final String OPTIONS$GRAPHICS     = "Graphics";
-    public static final String OPTIONS$CONTROLS     = "Controls";
-    public static final String OPTIONS$BACK         = "Back";
+    public static final int BUTTONS_WIDTH       = 300;
+    public static final int BUTTONS_HEIGHT      = 60;
+    public static final int BUTTON_BOTTOM_SPACE = 10;
 }

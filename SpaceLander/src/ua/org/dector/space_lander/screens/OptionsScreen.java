@@ -28,7 +28,6 @@
 
 package ua.org.dector.space_lander.screens;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -39,14 +38,13 @@ import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
 import ua.org.dector.space_lander.constants.UISizes;
 
-import static com.badlogic.gdx.Input.Keys;
 import static ua.org.dector.space_lander.constants.UISizes.*;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public class MainMenuScreen extends TableScreen<Lander> {
-    public MainMenuScreen(Lander lander) {
+public class OptionsScreen extends TableScreen<Lander> {
+    public OptionsScreen(Lander lander) {
         super(lander);
     }
 
@@ -54,33 +52,28 @@ public class MainMenuScreen extends TableScreen<Lander> {
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-        Button btnOptions = new TextButton(Labels.OPTIONS$OPTIONS, skin);
-        btnOptions.addListener(new ClickActorListener(btnOptions) {
+        Button btnAudio     = new TextButton(Labels.OPTIONS$AUDIO, skin);
+        Button btnGraphics  = new TextButton(Labels.OPTIONS$GRAPHICS, skin);
+        Button btnControls  = new TextButton(Labels.OPTIONS$CONTROLS, skin);
+        Button btnBack      = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack.addListener(new ClickActorListener(btnBack) {
             protected void onClick(int button) {
-                game.setScreen(new OptionsScreen(game));
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 
-        Button btnExit = new TextButton(Labels.OPTIONS$EXIT, skin);
-        btnExit.addListener(new ClickActorListener(btnExit) {
-            protected void onClick(int button) {
-                game.exit();
-            }
-        });
-
-        table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
+        table.add(Labels.OPTIONS$OPTIONS).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
         table.row();
-        table.add(btnOptions).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+        table.add(btnGraphics).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
                 spaceBottom(BUTTON_BOTTOM_SPACE);
         table.row();
-        table.add(btnExit).size(BUTTONS_WIDTH, BUTTONS_HEIGHT);
-    }
-
-    public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Keys.ESCAPE: game.exit(); break;
-        }
-
-        return true;
+        table.add(btnAudio).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+                spaceBottom(BUTTON_BOTTOM_SPACE);
+        table.row();
+        table.add(btnControls).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+                spaceBottom(BUTTON_BOTTOM_SPACE);
+        table.row();
+        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+                spaceBottom(BUTTON_BOTTOM_SPACE);
     }
 }

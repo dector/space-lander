@@ -31,6 +31,7 @@ package ua.org.dector.space_lander;
 import com.badlogic.gdx.Gdx;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.AbstractGame;
+import ua.org.dector.gcore.game.AbstractScreen;
 import ua.org.dector.gcore.utils.ResourceLoader;
 import ua.org.dector.space_lander.constants.Directories;
 import ua.org.dector.space_lander.screens.MainMenuScreen;
@@ -87,7 +88,7 @@ public class Lander extends AbstractGame {
         return settings;
     }
 
-    public void setScreen(MainMenuScreen screen) {
+    public void setScreen(AbstractScreen screen) {
         super.setScreen(screen);
         Gdx.input.setInputProcessor(screen);
     }
