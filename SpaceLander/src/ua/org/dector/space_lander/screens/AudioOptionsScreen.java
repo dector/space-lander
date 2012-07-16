@@ -142,6 +142,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
 
         table.defaults().spaceBottom(BOTTOM_SPACE);
         table.columnDefaults(3).padLeft(20);
+        table.columnDefaults(3).width(30);
         table.add(Labels.OPTIONS$AUDIO).spaceBottom(TITLE_BOTTOM_SPACE).colspan(4);
         table.row();
         table.add(Labels.OPTIONS$SFX_ENABLED);
@@ -182,6 +183,6 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
     public void render(float delta) {
         super.render(delta);
 
-//        if (Lander.DEV_MODE) Table.drawDebug(getStage());
+        if (Lander.DEV_MODE) Table.drawDebug(getStage());
     }
 }
