@@ -41,7 +41,8 @@ import ua.org.dector.space_lander.screens.SplashScreen;
  * @author dector (dector9@gmail.com)
  */
 public class Lander extends AbstractGame {
-    private static final String GAME_NAME = "SpaceLander";
+    private static final String SETTINGS_FILENAME = "SpaceLander";
+
     public static final boolean DEV_MODE = true;
 
     private Settings settings;
@@ -49,7 +50,7 @@ public class Lander extends AbstractGame {
     public void create() {
         super.create();
 
-        settings = new Settings(GAME_NAME);
+        settings = new Settings(SETTINGS_FILENAME);
 
         getMusicManager().setEnabled(settings.isMusicEnabled());
         getMusicManager().setVolume(settings.getMusicVolume());
@@ -67,7 +68,7 @@ public class Lander extends AbstractGame {
 
         restoreScreenSize();
 
-        if (DEV_MODE) {
+        if (Lander.DEV_MODE) {
             setScreen(new MainMenuScreen(this));
         } else {
             setScreen(new SplashScreen(this));

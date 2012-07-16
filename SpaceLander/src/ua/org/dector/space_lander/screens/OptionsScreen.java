@@ -28,6 +28,7 @@
 
 package ua.org.dector.space_lander.screens;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -36,7 +37,6 @@ import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
-import ua.org.dector.space_lander.constants.UISizes;
 
 import static ua.org.dector.space_lander.constants.UISizes.*;
 
@@ -58,22 +58,23 @@ public class OptionsScreen extends TableScreen<Lander> {
         Button btnBack      = new TextButton(Labels.OPTIONS$BACK, skin);
         btnBack.addListener(new ClickActorListener(btnBack) {
             protected void onClick(int button) {
-                game.setScreen(new MainMenuScreen(game));
+                if (button == Input.Buttons.LEFT)
+                    game.setScreen(new MainMenuScreen(game));
             }
         });
 
         table.add(Labels.OPTIONS$OPTIONS).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
         table.row();
         table.add(btnGraphics).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE);
+                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnAudio).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE);
+                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnControls).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE);
+                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
         table.row();
-        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE);
+        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
+                .fill().uniform();
     }
 }

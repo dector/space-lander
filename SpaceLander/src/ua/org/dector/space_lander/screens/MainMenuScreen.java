@@ -37,7 +37,6 @@ import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
-import ua.org.dector.space_lander.constants.UISizes;
 
 import static com.badlogic.gdx.Input.Keys;
 import static ua.org.dector.space_lander.constants.UISizes.*;
@@ -57,23 +56,25 @@ public class MainMenuScreen extends TableScreen<Lander> {
         Button btnOptions = new TextButton(Labels.OPTIONS$OPTIONS, skin);
         btnOptions.addListener(new ClickActorListener(btnOptions) {
             protected void onClick(int button) {
-                game.setScreen(new OptionsScreen(game));
+                if (button == Input.Buttons.LEFT)
+                    game.setScreen(new OptionsScreen(game));
             }
         });
 
         Button btnExit = new TextButton(Labels.OPTIONS$EXIT, skin);
         btnExit.addListener(new ClickActorListener(btnExit) {
             protected void onClick(int button) {
-                game.exit();
+                if (button == Input.Buttons.LEFT)
+                    game.exit();
             }
         });
 
-        table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
+        table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE);
         table.row();
         table.add(btnOptions).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE);
+                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
         table.row();
-        table.add(btnExit).size(BUTTONS_WIDTH, BUTTONS_HEIGHT);
+        table.add(btnExit).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).fill().uniform();
     }
 
     public boolean keyDown(int keycode) {
