@@ -43,8 +43,8 @@ import static ua.org.dector.space_lander.constants.UISizes.*;
 /**
  * @author dector (dector9@gmail.com)
  */
-public class OptionsScreen extends TableScreen<Lander> {
-    public OptionsScreen(Lander lander) {
+public class GraphicsOptionsScreen extends TableScreen<Lander> {
+    public GraphicsOptionsScreen(Lander lander) {
         super(lander);
     }
 
@@ -52,43 +52,18 @@ public class OptionsScreen extends TableScreen<Lander> {
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-        Button btnAudio     = new TextButton(Labels.OPTIONS$AUDIO, skin);
-        btnAudio.addListener(new ClickActorListener(btnAudio) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
-                    game.setScreen(new AudioOptionsScreen(game));
-            }
-        });
-
-        Button btnGraphics  = new TextButton(Labels.OPTIONS$GRAPHICS, skin);
-        btnGraphics.addListener(new ClickActorListener(btnGraphics) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
-                    game.setScreen(new GraphicsOptionsScreen(game));
-            }
-        });
-        Button btnControls  = new TextButton(Labels.OPTIONS$CONTROLS, skin);
-
         Button btnBack      = new TextButton(Labels.OPTIONS$BACK, skin);
         btnBack.addListener(new ClickActorListener(btnBack) {
             protected void onClick(int button) {
                 if (button == Input.Buttons.LEFT)
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new OptionsScreen(game));
             }
         });
 
-        table.add(Labels.OPTIONS$OPTIONS).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
-        table.row();
-        table.add(btnGraphics).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
-        table.row();
-        table.add(btnAudio).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
-        table.row();
-        table.add(btnControls).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BUTTON_BOTTOM_SPACE).fill().uniform();
+        table.add(Labels.OPTIONS$GRAPHICS).spaceBottom(TITLE_BOTTOM_SPACE);
         table.row();
         table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
+
     }
 }
