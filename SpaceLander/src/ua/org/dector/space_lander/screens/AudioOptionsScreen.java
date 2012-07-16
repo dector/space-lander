@@ -141,6 +141,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         if (Lander.DEV_MODE) table.debug();
 
         table.defaults().spaceBottom(BOTTOM_SPACE);
+        table.columnDefaults(3).padLeft(20);
         table.add(Labels.OPTIONS$AUDIO).spaceBottom(TITLE_BOTTOM_SPACE).colspan(4);
         table.row();
         table.add(Labels.OPTIONS$SFX_ENABLED);
@@ -148,13 +149,13 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         table.row();
         table.add(Labels.OPTIONS$SFX_VOLUME);
         table.add(sldSfxVolume).colspan(2).fill();
-        table.add(lblSfxVolume).colspan(3).uniform().spaceLeft(5).left();
+        table.add(lblSfxVolume).colspan(3).uniform().left();
         table.row();
         table.add(Labels.OPTIONS$MUSIC_ENABLED);
         table.row();
         table.add(Labels.OPTIONS$MUSIC_VOLUME);
         table.add(sldMusicVolume).colspan(2).fill();
-        table.add(lblMusicVolume).colspan(3).uniform().spaceLeft(5).left();
+        table.add(lblMusicVolume).colspan(3).uniform().left();
         table.row();
         table.add(btnSave).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
