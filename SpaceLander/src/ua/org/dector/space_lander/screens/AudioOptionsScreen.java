@@ -71,21 +71,21 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-//        final CheckBox chkSfxEnabled = new CheckBox("", skin);
-//        chkSfxEnabled.setChecked(game.getSettings().isSfxEnabled());
-//        chkSfxEnabled.addListener(new ChangeListener() {
-//            public void changed(ChangeEvent changeEvent, Actor actor) {
-//                boolean sfxEnabled = chkSfxEnabled.isChecked();
-//                game.getSoundManager().setEnabled(sfxEnabled);
-//            }
-//        });
+        final CheckBox chkSfxEnabled = new CheckBox("", skin);
+        chkSfxEnabled.setChecked(sfxEnabled);
+        chkSfxEnabled.addListener(new ChangeListener() {
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                sfxEnabled = chkSfxEnabled.isChecked();
 
-        Slider sldSfxVolume = new Slider(0, 1, 0.01f, skin);
+                soundManager.setEnabled(sfxEnabled);
+            }
+        });
+
+        final Slider sldSfxVolume = new Slider(0, 1, 0.01f, skin);
         sldSfxVolume.setValue(sfxVolume);
         sldSfxVolume.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                Slider slider = (Slider)actor;
-                sfxVolume = slider.getValue();
+                sfxVolume = sldSfxVolume.getValue();
                 soundManager.setVolume(sfxVolume);
 
                 updateSfxVolumeLabel();
@@ -95,12 +95,21 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         lblSfxVolume = new Label("", skin);
         updateSfxVolumeLabel();
 
-        Slider sldMusicVolume = new Slider(0, 1, 0.01f, skin);
+        final CheckBox chkMusicEnabled = new CheckBox("", skin);
+        chkMusicEnabled.setChecked(musicEnabled);
+        chkMusicEnabled.addListener(new ChangeListener() {
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                musicEnabled = chkMusicEnabled.isChecked();
+
+                musicManager.setEnabled(musicEnabled);
+            }
+        });
+
+        final Slider sldMusicVolume = new Slider(0, 1, 0.01f, skin);
         sldMusicVolume.setValue(musicVolume);
         sldMusicVolume.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                Slider slider = (Slider)actor;
-                musicVolume = slider.getValue();
+                musicVolume = sldMusicVolume.getValue();
                 musicManager.setVolume(musicVolume);
 
                 updateMusicVolumeLabel();
@@ -146,13 +155,14 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         table.add(Labels.OPTIONS$AUDIO).spaceBottom(TITLE_BOTTOM_SPACE).colspan(4);
         table.row();
         table.add(Labels.OPTIONS$SFX_ENABLED);
-//        table.add(chkSfxEnabled).colspan(2).left();
+        table.add(chkSfxEnabled).colspan(2).left();
         table.row();
         table.add(Labels.OPTIONS$SFX_VOLUME);
         table.add(sldSfxVolume).colspan(2).fill();
         table.add(lblSfxVolume).colspan(3).uniform().left();
         table.row();
         table.add(Labels.OPTIONS$MUSIC_ENABLED);
+        table.add(chkMusicEnabled).colspan(2).left();
         table.row();
         table.add(Labels.OPTIONS$MUSIC_VOLUME);
         table.add(sldMusicVolume).colspan(2).fill();
@@ -163,7 +173,6 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         table.row();
         table.add(btnCancel).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
-
     }
 
     private void gotoPrevSceen() {
@@ -183,6 +192,6 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
     public void render(float delta) {
         super.render(delta);
 
-        if (Lander.DEV_MODE) Table.drawDebug(getStage());
+//        if (Lander.DEV_MODE) Table.drawDebug(getStage());
     }
 }
