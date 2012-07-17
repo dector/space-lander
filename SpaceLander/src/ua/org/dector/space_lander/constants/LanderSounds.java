@@ -26,44 +26,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander.screens;
-
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.input.ClickActorListener;
-import ua.org.dector.space_lander.Lander;
-import ua.org.dector.space_lander.constants.Labels;
-
-import static ua.org.dector.space_lander.constants.UISizes.*;
+package ua.org.dector.space_lander.constants;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public class GraphicsOptionsScreen extends TableScreen<Lander> {
-    public GraphicsOptionsScreen(Lander lander) {
-        super(lander);
-    }
-
-    public void show() {
-        Skin skin = game.getGraphics().getSkin();
-        Table table = getTable();
-
-        Button btnBack      = new TextButton(Labels.OPTIONS$BACK, skin);
-        btnBack.addListener(new ClickActorListener(btnBack) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
-                    game.setScreen(new OptionsScreen(game));
-            }
-        });
-
-        table.add(Labels.OPTIONS$GRAPHICS).spaceBottom(TITLE_BOTTOM_SPACE);
-        table.row();
-        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
-                .fill().uniform();
-
-    }
+public interface LanderSounds {
+    public static final String MENU_CLICK = "menu/click.mp3";
 }

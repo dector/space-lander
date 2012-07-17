@@ -29,6 +29,7 @@
 package ua.org.dector.gcore.managers;
 
 import com.badlogic.gdx.audio.Sound;
+import ua.org.dector.gcore.utils.ResourceLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,43 +39,61 @@ import java.util.Map;
  */
 public class SoundManager extends AudioManager {
     private Map<String, Sound> sounds;
+    private ResourceLoader loader;
 
-    public SoundManager(float volume) {
+    public SoundManager(ResourceLoader loader, float volume) {
         super(volume);
+        setLoader(loader);
     }
 
-    public SoundManager(float volume, boolean enabled) {
+    public SoundManager(ResourceLoader loader, float volume, boolean enabled) {
         super(volume, enabled);
+        setLoader(loader);
     }
 
-    public SoundManager() {
+    public SoundManager(ResourceLoader loader) {
         super();
+        setLoader(loader);
+    }
+
+    private void setLoader(ResourceLoader loader) {
+        this.loader = loader;
     }
 
     protected void init() {
         sounds = new HashMap<String, Sound>();
     }
 
-    public void addSound(String id, Sound sound) {
-        if (sound == null) return;
-        if (sounds.containsKey(id)) return;
+    private Sound addSound(String soundFile, Sound sound) {
 
-        sounds.put(id, sound);
+        return sound;
     }
 
-    public void play(String id) {
-        play(id, false);
+    public Sound getSound(String soundFile) {
+        Sound sound;
+
+        if (sounds.containsKey(soundFile)) {
+            sound = sounds.get(soundFile);
+        } else {
+            sound = loader.loadSound(soundFile);
+            sounds.put(soundFile, sound);
+        }
+
+        return sound;
     }
 
-    public void loop(String id) {
-        play(id, true);
+    public void play(String soundFile) {
+        play(soundFile, false);
     }
 
-    public void play(String id, boolean loop) {
+    public void loop(String soundFile) {
+        play(soundFile, true);
+    }
+
+    public void play(String soundFile, boolean loop) {
         if (! isEnabled()) return;
-        if (! sounds.containsKey(id)) return;
 
-        Sound sound = sounds.get(id);
+        Sound sound = getSound(soundFile);
 
         if (loop)
             sound.loop(getVolume());
@@ -82,20 +101,20 @@ public class SoundManager extends AudioManager {
             sound.play(getVolume());
     }
 
-    public void stop(String id) {
-        if (! sounds.containsKey(id)) return;
+    public void stop(String soundFile) {
+        if (! sounds.containsKey(soundFile)) return;
 
-        sounds.get(id).stop();
+        sounds.get(soundFile).stop();
     }
 
     public void dispose() {
-        for (String id : sounds.keySet())
-            sounds.get(id).dispose();
+        for (String soundFile : sounds.keySet())
+            getSound(soundFile).dispose();
     }
 
     public void stopAll() {
-        for (String id : sounds.keySet()) {
-            stop(id);
+        for (String soundFile : sounds.keySet()) {
+            stop(soundFile);
         }
     }
 }

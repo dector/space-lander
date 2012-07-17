@@ -34,7 +34,7 @@ import ua.org.dector.gcore.game.AbstractGame;
 import ua.org.dector.gcore.game.AbstractScreen;
 import ua.org.dector.gcore.utils.ResourceLoader;
 import ua.org.dector.space_lander.constants.Directories;
-import ua.org.dector.space_lander.screens.MainMenuScreen;
+import ua.org.dector.space_lander.screens.menu.MainMenuScreen;
 import ua.org.dector.space_lander.screens.SplashScreen;
 
 /**

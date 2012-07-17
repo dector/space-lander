@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander.screens;
+package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,6 +39,7 @@ import ua.org.dector.gcore.managers.MusicManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
+import ua.org.dector.space_lander.constants.LanderSounds;
 
 import static ua.org.dector.space_lander.constants.UISizes.*;
 
@@ -77,7 +78,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 sfxEnabled = chkSfxEnabled.isChecked();
 
-                soundManager.setEnabled(sfxEnabled);
+                soundManager.play(LanderSounds.MENU_CLICK);
             }
         });
 
@@ -99,9 +100,9 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         chkMusicEnabled.setChecked(musicEnabled);
         chkMusicEnabled.addListener(new ChangeListener() {
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                musicEnabled = chkMusicEnabled.isChecked();
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                musicManager.setEnabled(musicEnabled);
+                musicEnabled = chkMusicEnabled.isChecked();
             }
         });
 
@@ -123,6 +124,11 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         btnSave.addListener(new ClickActorListener(btnSave) {
             protected void onClick(int button) {
                 if (button == Input.Buttons.LEFT) {
+                    soundManager.play(LanderSounds.MENU_CLICK);
+
+                    soundManager.setEnabled(sfxEnabled);
+                    musicManager.setEnabled(musicEnabled);
+
                     settings.setSfxEnabled(sfxEnabled);
                     settings.setSfxVolume(sfxVolume);
                     settings.setMusicEnabled(musicEnabled);
@@ -137,10 +143,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         btnCancel.addListener(new ClickActorListener(btnCancel) {
             protected void onClick(int button) {
                 if (button == Input.Buttons.LEFT) {
-                    soundManager.setEnabled(settings.isSfxEnabled());
-                    soundManager.setVolume(settings.getSfxVolume());
-                    musicManager.setEnabled(settings.isMusicEnabled());
-                    musicManager.setVolume(settings.getMusicVolume());
+                    soundManager.play(LanderSounds.MENU_CLICK);
 
                     gotoPrevSceen();
                 }

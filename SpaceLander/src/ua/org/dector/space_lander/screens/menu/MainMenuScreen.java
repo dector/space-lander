@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander.screens;
+package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -35,8 +35,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.input.ClickActorListener;
+import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
+import ua.org.dector.space_lander.constants.LanderSounds;
 
 import static com.badlogic.gdx.Input.Keys;
 import static ua.org.dector.space_lander.constants.UISizes.*;
@@ -50,22 +52,30 @@ public class MainMenuScreen extends TableScreen<Lander> {
     }
 
     public void show() {
+        final SoundManager soundManager = game.getSoundManager();
+
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
         Button btnOptions = new TextButton(Labels.OPTIONS$OPTIONS, skin);
         btnOptions.addListener(new ClickActorListener(btnOptions) {
             protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
+                if (button == Input.Buttons.LEFT) {
+                    soundManager.play(LanderSounds.MENU_CLICK);
+
                     game.setScreen(new OptionsScreen(game));
+                }
             }
         });
 
         Button btnExit = new TextButton(Labels.OPTIONS$EXIT, skin);
         btnExit.addListener(new ClickActorListener(btnExit) {
             protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
+                if (button == Input.Buttons.LEFT) {
+                    soundManager.play(LanderSounds.MENU_CLICK);
+
                     game.exit();
+                }
             }
         });
 
