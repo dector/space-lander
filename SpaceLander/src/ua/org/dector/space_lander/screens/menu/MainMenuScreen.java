@@ -29,6 +29,7 @@
 package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -36,9 +37,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
+import ua.org.dector.gcore.managers.MusicManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
+import ua.org.dector.space_lander.constants.LanderMusic;
 import ua.org.dector.space_lander.constants.LanderSounds;
 
 import static com.badlogic.gdx.Input.Keys;
@@ -54,6 +57,8 @@ public class MainMenuScreen extends TableScreen<Lander> {
 
     public void show() {
         final SoundManager soundManager = game.getSoundManager();
+
+        game.getMusicManager().play(LanderMusic.MENU, true);
 
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();

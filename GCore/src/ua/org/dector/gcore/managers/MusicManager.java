@@ -29,26 +29,55 @@
 package ua.org.dector.gcore.managers;
 
 import com.badlogic.gdx.audio.Music;
+import ua.org.dector.gcore.utils.ResourceLoader;
 
 /**
  * @author dector (dector9@gmail.com)
  */
 public class MusicManager extends AudioManager {
+    private String musicFile;
     private Music music;
+
+    private ResourceLoader loader;
+
+    public MusicManager(ResourceLoader loader) {
+        super();
+        this.loader = loader;
+    }
+
+    public MusicManager(ResourceLoader loader, float volume) {
+        super(volume);
+        this.loader = loader;
+    }
+
+    public MusicManager(ResourceLoader loader, float volume, boolean enabled) {
+        super(volume, enabled);
+        this.loader = loader;
+    }
 
     protected void init() {}
 
-    public Music getMusic() {
+    private Music getMusic() {
         return music;
     }
 
-    public void setMusic(Music music, boolean loop) {
-        if (music == null) return;
+    public void play(String musicFile, boolean loop) {
 
-        music.setLooping(loop);
+        if (this.musicFile != null) {
+            if (this.musicFile.equals(musicFile)) {
+                play();
+                return;
+            } else {
+                getMusic().dispose();
+            }
+        }
+
+        this.musicFile = musicFile;
+        music = loader.loadMusic(musicFile);
         music.setVolume(getVolume());
+        music.setLooping(loop);
 
-        this.music = music;
+        play();
     }
 
     public void play() {

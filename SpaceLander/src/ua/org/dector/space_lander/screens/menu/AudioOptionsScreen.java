@@ -135,6 +135,11 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
 
+                settings.setSfxEnabled(sfxEnabled);
+                settings.setSfxVolume(sfxVolume);
+                settings.setMusicEnabled(musicEnabled);
+                settings.setMusicVolume(musicVolume);
+
                 soundManager.setEnabled(sfxEnabled);
                 musicManager.setEnabled(musicEnabled);
 

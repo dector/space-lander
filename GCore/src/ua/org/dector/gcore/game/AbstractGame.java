@@ -51,7 +51,7 @@ public abstract class AbstractGame extends Game {
         resourceLoader = new ResourceLoader();
 
         soundManager = new SoundManager(resourceLoader);
-        musicManager = new MusicManager();
+        musicManager = new MusicManager(resourceLoader);
 
         g = new GraphicsImpl(this);
     }
