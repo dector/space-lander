@@ -29,12 +29,13 @@
 package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
@@ -57,45 +58,37 @@ public class OptionsScreen extends TableScreen<Lander> {
         Table table = getTable();
 
         Button btnAudio     = new TextButton(Labels.OPTIONS$AUDIO, skin);
-        btnAudio.addListener(new ClickActorListener(btnAudio) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnAudio.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new AudioOptionsScreen(game));
-                }
+                game.setScreen(new AudioOptionsScreen(game));
             }
         });
 
         Button btnGraphics  = new TextButton(Labels.OPTIONS$GRAPHICS, skin);
-        btnGraphics.addListener(new ClickActorListener(btnGraphics) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnGraphics.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new GraphicsOptionsScreen(game));
-                }
+                game.setScreen(new GraphicsOptionsScreen(game));
             }
         });
         Button btnControls  = new TextButton(Labels.OPTIONS$CONTROLS, skin);
-        btnControls.addListener(new ClickActorListener(btnControls) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnControls.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new ControlsOptionsScreen(game));
-                }
+                game.setScreen(new ControlsOptionsScreen(game));
             }
         });
 
         Button btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
-        btnBack.addListener(new ClickActorListener(btnBack) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnBack.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new MainMenuScreen(game));
-                }
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 

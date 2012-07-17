@@ -28,14 +28,14 @@
 
 package ua.org.dector.space_lander.screens.menu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.gcore.utils.ScreenMode;
 import ua.org.dector.space_lander.Lander;
@@ -54,6 +54,11 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
     private ScreenMode currentScreenMode;
     private boolean fullscreen;
 
+    private TextButton btnSave;
+    private TextButton btnBack;
+
+    private boolean changed;
+
     public GraphicsOptionsScreen(Lander lander) {
         super(lander);
     }
@@ -71,10 +76,9 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
 
         sbxDisplayModes = new SelectBox(screenModes, skin);
         sbxDisplayModes.setSelection(currentScreenMode.toString());
-        sbxDisplayModes.addListener(new ClickActorListener(sbxDisplayModes) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT)
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        sbxDisplayModes.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
             }
         });
         sbxDisplayModes.addListener(new ChangeListener() {
@@ -83,6 +87,8 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
 
                 int modeSelected = sbxDisplayModes.getSelectionIndex();
                 currentScreenMode = screenModes[modeSelected];
+
+                setChanged();
             }
         });
 
@@ -93,32 +99,34 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
                 soundManager.play(LanderSounds.MENU_CLICK);
 
                 fullscreen = chkFullscreen.isChecked();
+
+                setChanged();
             }
         });
 
-        Button btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
-        btnSave.addListener(new ClickActorListener(btnSave) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave.setVisible(false);
+        btnSave.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    settings.setScreenWidth(currentScreenMode.getWidth());
-                    settings.setScreenHeight(currentScreenMode.getHeight());
-                    settings.setFullscreen(fullscreen);
+                settings.setScreenWidth(currentScreenMode.getWidth());
+                settings.setScreenHeight(currentScreenMode.getHeight());
+                settings.setFullscreen(fullscreen);
 
-                    ScreenMode.setUp(currentScreenMode, fullscreen);
-                }
+                ScreenMode.setUp(currentScreenMode, fullscreen);
+
+                changed = false;
+                btnBack.setText(Labels.OPTIONS$BACK);
             }
         });
 
-        Button btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
-        btnBack.addListener(new ClickActorListener(btnBack) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new OptionsScreen(game));
-                }
+                game.setScreen(new OptionsScreen(game));
             }
         });
 
@@ -137,5 +145,13 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
         table.row();
         table.add(btnBack).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
+    }
+
+    private void setChanged() {
+        if (changed) return;
+
+        changed = true;
+        btnSave.setVisible(true);
+        btnBack.setText(Labels.OPTIONS$CANCEL);
     }
 }

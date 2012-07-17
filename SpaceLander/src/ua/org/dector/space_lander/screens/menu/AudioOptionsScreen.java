@@ -30,11 +30,12 @@ package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.gcore.managers.MusicManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
@@ -54,6 +55,10 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
 
     private Label lblSfxVolume;
     private Label lblMusicVolume;
+    private TextButton btnSave;
+    private TextButton btnBack;
+
+    private boolean changed;
 
     public AudioOptionsScreen(Lander lander) {
         super(lander);
@@ -76,9 +81,10 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         chkSfxEnabled.setChecked(sfxEnabled);
         chkSfxEnabled.addListener(new ChangeListener() {
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                sfxEnabled = chkSfxEnabled.isChecked();
-
                 soundManager.play(LanderSounds.MENU_CLICK);
+
+                sfxEnabled = chkSfxEnabled.isChecked();
+                setChanged();
             }
         });
 
@@ -90,6 +96,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
                 soundManager.setVolume(sfxVolume);
 
                 updateSfxVolumeLabel();
+                setChanged();
             }
         });
 
@@ -103,6 +110,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
                 soundManager.play(LanderSounds.MENU_CLICK);
 
                 musicEnabled = chkMusicEnabled.isChecked();
+                setChanged();
             }
         });
 
@@ -114,39 +122,39 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
                 musicManager.setVolume(musicVolume);
 
                 updateMusicVolumeLabel();
+                setChanged();
             }
         });
 
         lblMusicVolume = new Label("", skin);
         updateMusicVolumeLabel();
 
-        Button btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
-        btnSave.addListener(new ClickActorListener(btnSave) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave.setVisible(false);
+        btnSave.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    soundManager.setEnabled(sfxEnabled);
-                    musicManager.setEnabled(musicEnabled);
+                soundManager.setEnabled(sfxEnabled);
+                musicManager.setEnabled(musicEnabled);
 
-                    settings.setSfxEnabled(sfxEnabled);
-                    settings.setSfxVolume(sfxVolume);
-                    settings.setMusicEnabled(musicEnabled);
-                    settings.setMusicVolume(musicVolume);
-
-                    gotoPrevSceen();
-                }
+                changed = false;
+                btnSave.setVisible(false);
+                btnBack.setText(Labels.OPTIONS$BACK);
             }
         });
 
-        Button btnCancel = new TextButton(Labels.OPTIONS$CANCEL, skin);
-        btnCancel.addListener(new ClickActorListener(btnCancel) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    gotoPrevSceen();
+                if (changed) {
+                    soundManager.setVolume(settings.getSfxVolume());
+                    musicManager.setVolume(settings.getMusicVolume());
                 }
+
+                gotoPrevSceen();
             }
         });
 
@@ -174,7 +182,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         table.add(btnSave).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
         table.row();
-        table.add(btnCancel).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
+        table.add(btnBack).colspan(4).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
     }
 
@@ -190,6 +198,14 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
     private void updateMusicVolumeLabel() {
         String text = String.format("%d%%", (int) (musicVolume * 100));
         lblMusicVolume.setText(text);
+    }
+
+    private void setChanged() {
+        if (changed) return;
+
+        changed = true;
+        btnSave.setVisible(true);
+        btnBack.setText(Labels.OPTIONS$CANCEL);
     }
 
     public void render(float delta) {

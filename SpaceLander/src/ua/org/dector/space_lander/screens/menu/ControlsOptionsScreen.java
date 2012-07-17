@@ -29,12 +29,13 @@
 package ua.org.dector.space_lander.screens.menu;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.input.ClickActorListener;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
@@ -57,13 +58,11 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         Table table = getTable();
 
         Button btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
-        btnBack.addListener(new ClickActorListener(btnBack) {
-            protected void onClick(int button) {
-                if (button == Input.Buttons.LEFT) {
-                    soundManager.play(LanderSounds.MENU_CLICK);
+        btnBack.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
 
-                    game.setScreen(new OptionsScreen(game));
-                }
+                game.setScreen(new OptionsScreen(game));
             }
         });
 
