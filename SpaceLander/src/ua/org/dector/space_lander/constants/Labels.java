@@ -48,4 +48,7 @@ public interface Labels {
     public static final String OPTIONS$SFX_VOLUME   = "SFX Volume";
     public static final String OPTIONS$MUSIC_ENABLED= "Enable Music";
     public static final String OPTIONS$MUSIC_VOLUME = "Music Volume";
+
+    public static final String OPTIONS$FULLSCREEN   = "Fullscreen";
+    public static final String OPTIONS$DISPLAY_MODE = "Display Mode";
 }
