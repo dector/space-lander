@@ -34,6 +34,7 @@ import ua.org.dector.gcore.game.AbstractGame;
 import ua.org.dector.gcore.game.AbstractScreen;
 import ua.org.dector.gcore.utils.ResourceLoader;
 import ua.org.dector.space_lander.constants.Directories;
+import ua.org.dector.space_lander.controls.LanderControls;
 import ua.org.dector.space_lander.screens.menu.MainMenuScreen;
 import ua.org.dector.space_lander.screens.SplashScreen;
 
@@ -51,6 +52,7 @@ public class Lander extends AbstractGame {
         super.create();
 
         settings = new Settings(SETTINGS_FILENAME);
+        LanderControls.restore(settings.getPrefs());
 
         getMusicManager().setEnabled(settings.isMusicEnabled());
         getMusicManager().setVolume(settings.getMusicVolume());

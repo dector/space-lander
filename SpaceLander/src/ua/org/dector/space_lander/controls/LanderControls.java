@@ -29,14 +29,37 @@
 package ua.org.dector.space_lander.controls;
 
 import com.badlogic.gdx.Input;
+import ua.org.dector.gcore.managers.PreferencesManager;
 
 /**
  * @author dector (dector9@gmail.com)
  */
 public class LanderControls {
-    public static int SPEED_UP      = Input.Keys.UP;
-    public static int ROTATE_LEFT   = Input.Keys.LEFT;
-    public static int ROTATE_RIGHT  = Input.Keys.RIGHT;
-    public static int PAUSE         = Input.Keys.P;
-    public static int RESTART       = Input.Keys.R;
+    public static int SPEED_UP;
+    public static int ROTATE_LEFT;
+    public static int ROTATE_RIGHT;
+    public static int PAUSE;
+    public static int RESTART;
+
+    public static String PREF_SPEED_UP      = "keys.speed.up";
+    public static String PREF_ROTATE_LEFT   = "keys.rotate.left";
+    public static String PREF_ROTATE_RIGHT  = "keys.rotate.right";
+    public static String PREF_PAUSE         = "keys.pause";
+    public static String PREF_RESTART       = "keys.restart";
+
+    public static void restore(PreferencesManager prefs) {
+        SPEED_UP      = prefs.getInt(PREF_SPEED_UP, Input.Keys.UP);
+        ROTATE_LEFT   = prefs.getInt(PREF_ROTATE_LEFT, Input.Keys.LEFT);
+        ROTATE_RIGHT  = prefs.getInt(PREF_ROTATE_RIGHT, Input.Keys.RIGHT);
+        PAUSE         = prefs.getInt(PREF_PAUSE, Input.Keys.P);
+        RESTART       = prefs.getInt(PREF_RESTART, Input.Keys.R);
+    }
+
+    public static void store(PreferencesManager prefs) {
+        prefs.putInt(PREF_SPEED_UP, SPEED_UP);
+        prefs.putInt(PREF_ROTATE_LEFT, ROTATE_LEFT);
+        prefs.putInt(PREF_ROTATE_RIGHT, ROTATE_RIGHT);
+        prefs.putInt(PREF_PAUSE, PAUSE);
+        prefs.putInt(PREF_RESTART, RESTART);
+    }
 }

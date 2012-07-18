@@ -119,4 +119,8 @@ public class Settings {
     public void save() {
         prefs.save();
     }
+
+    public PreferencesManager getPrefs() {
+        return prefs;
+    }
 }

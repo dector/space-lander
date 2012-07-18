@@ -38,6 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.TableScreen;
+import ua.org.dector.gcore.managers.PreferencesManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.gcore.utils.Utils;
 import ua.org.dector.space_lander.Lander;
@@ -149,6 +150,8 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
                 LanderControls.ROTATE_RIGHT = rotateRightKey;
                 LanderControls.PAUSE        = pauseKey;
                 LanderControls.RESTART      = restartKey;
+
+                LanderControls.store(settings.getPrefs());
 
                 changed = false;
                 btnSave.setVisible(false);
