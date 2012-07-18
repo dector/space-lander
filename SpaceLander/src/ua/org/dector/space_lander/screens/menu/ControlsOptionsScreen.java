@@ -64,13 +64,15 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         updateTextAt(btnSpeedupOption, LanderControls.SPEED_UP);
         btnSpeedupOption.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
-                getNewKey(btnSpeedupOption, Control.SPEED_UP);
+                soundManager.play(LanderSounds.MENU_CLICK);
+
+                getNewKey(Labels.SPEED_UP, btnSpeedupOption, Control.SPEED_UP);
             }
         });
 
         Table controlsTable = new Table(skin);
         controlsTable.defaults().padBottom(BOTTOM_SPACE);
-        controlsTable.add(Labels.SPEEDUP);
+        controlsTable.add(Labels.SPEED_UP);
         controlsTable.add(btnSpeedupOption).colspan(2);
         controlsTable.row();
         controlsTable.add(Labels.ROTATE_LEFT);
@@ -115,7 +117,9 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         }
     }
 
-    public void getNewKey(final TextButton button, final Control control) {
+    public void getNewKey(String controlText,
+                          final TextButton button,
+                          final Control control) {
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
@@ -136,24 +140,43 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
 
         p.dispose();
 
-        Image dark = new Image(tex);
-        dark.addListener(new ActorListener() {
+        final Group group = new Group();
+
+        Image darkBack = new Image(tex);
+        darkBack.addListener(new ActorListener() {
             public boolean keyDown(ActorEvent event, int keycode) {
+                game.getSoundManager().play(LanderSounds.MENU_CLICK);
+
                 setUpInput(control, keycode);
                 updateTextAt(button, keycode);
 
-                event.getListenerActor().addAction(Actions.removeActor());
-
+                disableKeyboardInput(group);
                 return true;
             }
 
-            public boolean touchDown(ActorEvent event, float x, float y, int pointer, int button) {
-                event.getListenerActor().addAction(Actions.removeActor());
+            public boolean touchDown(ActorEvent event, float x, float y,
+                                     int pointer, int button) {
+                game.getSoundManager().play(LanderSounds.MENU_CLICK);
+
+                disableKeyboardInput(group);
                 return true;
             }
         });
-        getStage().addActor(dark);
-        getStage().setKeyboardFocus(dark);
+
+        Table textTable = new Table(game.getGraphics().getSkin());
+        textTable.setPosition(screenWidth / 2, screenHeight / 2);
+        textTable.add(String.format("%s \"%s\"", Labels.PRESS_NEW_KEY_FOR, controlText));
+
+        group.addActor(darkBack);
+        group.addActor(textTable);
+        getStage().addActor(group);
+        getStage().setKeyboardFocus(darkBack);
+    }
+
+    private void disableKeyboardInput(Group group) {
+        group.addAction(Actions.removeActor());
+        getStage().setKeyboardFocus(null);
+        
     }
 
     static enum Control {

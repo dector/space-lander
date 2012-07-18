@@ -52,9 +52,11 @@ public interface Labels {
     public static final String OPTIONS$FULLSCREEN   = "Fullscreen";
     public static final String OPTIONS$DISPLAY_MODE = "Display Mode";
 
-    public static final String SPEEDUP              = "Speedup";
+    public static final String SPEED_UP = "Speedup";
     public static final String ROTATE_LEFT          = "Rotate Left";
     public static final String ROTATE_RIGHT         = "Rotate Right";
     public static final String PAUSE                = "Pause";
     public static final String RESTART              = "Restart";
+
+    public static final String PRESS_NEW_KEY_FOR    = "Press new key for";
 }
