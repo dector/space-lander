@@ -28,18 +28,21 @@
 
 package ua.org.dector.space_lander.screens.menu;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.ActorEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.managers.SoundManager;
+import ua.org.dector.gcore.utils.Utils;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
 import ua.org.dector.space_lander.constants.LanderSounds;
+import ua.org.dector.space_lander.controls.LanderControls;
 
 import static ua.org.dector.space_lander.constants.UISizes.*;
 
@@ -57,7 +60,29 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-        Button btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        final TextButton btnSpeedupOption = new TextButton("", skin);
+        updateTextAt(btnSpeedupOption, LanderControls.SPEED_UP);
+        btnSpeedupOption.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                getNewKey(btnSpeedupOption, Control.SPEED_UP);
+            }
+        });
+
+        Table controlsTable = new Table(skin);
+        controlsTable.defaults().padBottom(BOTTOM_SPACE);
+        controlsTable.add(Labels.SPEEDUP);
+        controlsTable.add(btnSpeedupOption).colspan(2);
+        controlsTable.row();
+        controlsTable.add(Labels.ROTATE_LEFT);
+        controlsTable.row();
+        controlsTable.add(Labels.ROTATE_RIGHT);
+        controlsTable.row();
+        controlsTable.add(Labels.PAUSE);
+        controlsTable.row();
+        controlsTable.add(Labels.RESTART);
+        ScrollPane controlsPane = new ScrollPane(controlsTable);
+
+        TextButton btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
         btnBack.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -66,10 +91,72 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
             }
         });
 
-        table.add(Labels.OPTIONS$CONTROLS).spaceBottom(TITLE_BOTTOM_SPACE);
+        table.add(Labels.OPTIONS$CONTROLS).spaceBottom(TITLE_BOTTOM_SPACE).colspan(3);
         table.row();
-        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
+        table.add(controlsPane).fill().padBottom(BOTTOM_SPACE);
+        table.row();
+        table.add(btnBack).colspan(3).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
 
+        table.debug();
+    }
+
+    private static String getKeyString(int key) {
+        return "Key " + key;
+    }
+
+    private void updateTextAt(TextButton button, int key) {
+        button.setText(getKeyString(key));
+    }
+
+    private void setUpInput(Control control, int key) {
+        switch (control) {
+            case SPEED_UP: LanderControls.SPEED_UP = key; break;
+        }
+    }
+
+    public void getNewKey(final TextButton button, final Control control) {
+        int screenWidth = Gdx.graphics.getWidth();
+        int screenHeight = Gdx.graphics.getHeight();
+
+        Pixmap p = new Pixmap(
+                Utils.toPowerOfTwo(screenWidth),
+                Utils.toPowerOfTwo(screenHeight),
+                Pixmap.Format.RGBA8888
+        );
+
+        p.setColor(0, 0, 0, .8f);
+        p.fill();
+
+        TextureRegion tex = new TextureRegion(
+                new Texture(p),
+                screenWidth,
+                screenHeight
+        );
+
+        p.dispose();
+
+        Image dark = new Image(tex);
+        dark.addListener(new ActorListener() {
+            public boolean keyDown(ActorEvent event, int keycode) {
+                setUpInput(control, keycode);
+                updateTextAt(button, keycode);
+
+                event.getListenerActor().addAction(Actions.removeActor());
+
+                return true;
+            }
+
+            public boolean touchDown(ActorEvent event, float x, float y, int pointer, int button) {
+                event.getListenerActor().addAction(Actions.removeActor());
+                return true;
+            }
+        });
+        getStage().addActor(dark);
+        getStage().setKeyboardFocus(dark);
+    }
+
+    static enum Control {
+        SPEED_UP, ROTATE_LEFT, ROTATE_RIGHT, PAUSE, RESTART
     }
 }

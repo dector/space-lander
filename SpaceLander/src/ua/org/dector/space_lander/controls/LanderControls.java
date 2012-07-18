@@ -26,35 +26,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ua.org.dector.space_lander.constants;
+package ua.org.dector.space_lander.controls;
+
+import com.badlogic.gdx.Input;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public interface Labels {
-    public static final String TITLE = "Space Lander";
-
-    public static final String OPTIONS$OPTIONS      = "Options";
-    public static final String OPTIONS$EXIT         = "Exit";
-    public static final String OPTIONS$SAVE         = "Save";
-    public static final String OPTIONS$BACK         = "Back";
-    public static final String OPTIONS$CANCEL       = "Cancel";
-
-    public static final String OPTIONS$AUDIO        = "Audio";
-    public static final String OPTIONS$GRAPHICS     = "Graphics";
-    public static final String OPTIONS$CONTROLS     = "Controls";
-
-    public static final String OPTIONS$SFX_ENABLED  = "Enable SFX";
-    public static final String OPTIONS$SFX_VOLUME   = "SFX Volume";
-    public static final String OPTIONS$MUSIC_ENABLED= "Enable Music";
-    public static final String OPTIONS$MUSIC_VOLUME = "Music Volume";
-
-    public static final String OPTIONS$FULLSCREEN   = "Fullscreen";
-    public static final String OPTIONS$DISPLAY_MODE = "Display Mode";
-
-    public static final String SPEEDUP              = "Speedup";
-    public static final String ROTATE_LEFT          = "Rotate Left";
-    public static final String ROTATE_RIGHT         = "Rotate Right";
-    public static final String PAUSE                = "Pause";
-    public static final String RESTART              = "Restart";
+public class LanderControls {
+    public static int SPEED_UP      = Input.Keys.UP;
+    public static int ROTATE_LEFT   = Input.Keys.LEFT;
+    public static int ROTATE_RIGHT  = Input.Keys.RIGHT;
+    public static int PAUSE         = Input.Keys.P;
+    public static int RESTART       = Input.Keys.R;
 }
