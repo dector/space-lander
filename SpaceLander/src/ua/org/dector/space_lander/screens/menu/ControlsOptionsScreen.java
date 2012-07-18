@@ -36,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.gcore.utils.Utils;
@@ -50,23 +51,71 @@ import static ua.org.dector.space_lander.constants.UISizes.*;
  * @author dector (dector9@gmail.com)
  */
 public class ControlsOptionsScreen extends TableScreen<Lander> {
+    private int speedUpKey;
+    private int rotateLeftKey;
+    private int rotateRightKey;
+    private int pauseKey;
+    private int restartKey;
+
+    private TextButton btnSave;
+    private TextButton btnBack;
+
+    private boolean changed;
+
     public ControlsOptionsScreen(Lander lander) {
         super(lander);
     }
 
     public void show() {
         final SoundManager soundManager = game.getSoundManager();
+        final Settings settings = game.getSettings();
+
+        speedUpKey      = LanderControls.SPEED_UP;
+        rotateLeftKey   = LanderControls.ROTATE_LEFT;
+        rotateRightKey  = LanderControls.ROTATE_RIGHT;
+        pauseKey        = LanderControls.PAUSE;
+        restartKey      = LanderControls.RESTART;
 
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
         final TextButton btnSpeedupOption = new TextButton("", skin);
-        updateTextAt(btnSpeedupOption, LanderControls.SPEED_UP);
+        updateTextAt(btnSpeedupOption, speedUpKey);
         btnSpeedupOption.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
-                soundManager.play(LanderSounds.MENU_CLICK);
-
                 getNewKey(Labels.SPEED_UP, btnSpeedupOption, Control.SPEED_UP);
+            }
+        });
+
+        final TextButton btnRotateLeftOption = new TextButton("", skin);
+        updateTextAt(btnRotateLeftOption, rotateLeftKey);
+        btnRotateLeftOption.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                getNewKey(Labels.ROTATE_LEFT, btnRotateLeftOption, Control.ROTATE_LEFT);
+            }
+        });
+
+        final TextButton btnRotateRightOption = new TextButton("", skin);
+        updateTextAt(btnRotateRightOption, rotateRightKey);
+        btnRotateRightOption.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                getNewKey(Labels.ROTATE_RIGHT, btnRotateRightOption, Control.ROTATE_RIGHT);
+            }
+        });
+
+        final TextButton btnPauseOption = new TextButton("", skin);
+        updateTextAt(btnPauseOption, pauseKey);
+        btnPauseOption.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                getNewKey(Labels.PAUSE, btnPauseOption, Control.PAUSE);
+            }
+        });
+
+        final TextButton btnRestartOption = new TextButton("", skin);
+        updateTextAt(btnRestartOption, restartKey);
+        btnRestartOption.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                getNewKey(Labels.RESTART, btnRestartOption, Control.RESTART);
             }
         });
 
@@ -76,15 +125,38 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         controlsTable.add(btnSpeedupOption).colspan(2);
         controlsTable.row();
         controlsTable.add(Labels.ROTATE_LEFT);
+        controlsTable.add(btnRotateLeftOption).colspan(2);
         controlsTable.row();
         controlsTable.add(Labels.ROTATE_RIGHT);
+        controlsTable.add(btnRotateRightOption).colspan(2);
         controlsTable.row();
         controlsTable.add(Labels.PAUSE);
+        controlsTable.add(btnPauseOption).colspan(2);
         controlsTable.row();
         controlsTable.add(Labels.RESTART);
+        controlsTable.add(btnRestartOption).colspan(2);
+
         ScrollPane controlsPane = new ScrollPane(controlsTable);
 
-        TextButton btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave.setVisible(false);
+        btnSave.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
+
+                LanderControls.SPEED_UP     = speedUpKey;
+                LanderControls.ROTATE_LEFT  = rotateLeftKey;
+                LanderControls.ROTATE_RIGHT = rotateRightKey;
+                LanderControls.PAUSE        = pauseKey;
+                LanderControls.RESTART      = restartKey;
+
+                changed = false;
+                btnSave.setVisible(false);
+                btnBack.setText(Labels.OPTIONS$BACK);
+            }
+        });
+
+        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
         btnBack.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -97,10 +169,21 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
         table.row();
         table.add(controlsPane).fill().padBottom(BOTTOM_SPACE);
         table.row();
+        table.add(btnSave).colspan(3).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
+                .fill().uniform();
+        table.row();
         table.add(btnBack).colspan(3).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
                 .fill().uniform();
 
         table.debug();
+    }
+
+    private void setChanged() {
+        if (changed) return;
+
+        changed = true;
+        btnSave.setVisible(true);
+        btnBack.setText(Labels.OPTIONS$CANCEL);
     }
 
     private static String getKeyString(int key) {
@@ -112,14 +195,22 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
     }
 
     private void setUpInput(Control control, int key) {
+        setChanged();
+
         switch (control) {
-            case SPEED_UP: LanderControls.SPEED_UP = key; break;
+            case SPEED_UP:      speedUpKey = key; break;
+            case ROTATE_LEFT:   rotateLeftKey = key; break;
+            case ROTATE_RIGHT:  rotateRightKey = key; break;
+            case PAUSE:         pauseKey = key; break;
+            case RESTART:       restartKey = key; break;
         }
     }
 
     public void getNewKey(String controlText,
                           final TextButton button,
                           final Control control) {
+        game.getSoundManager().play(LanderSounds.MENU_CLICK);
+
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
@@ -129,7 +220,7 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
                 Pixmap.Format.RGBA8888
         );
 
-        p.setColor(0, 0, 0, .8f);
+        p.setColor(0, 0, 0, .9f);
         p.fill();
 
         TextureRegion tex = new TextureRegion(
@@ -163,9 +254,18 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
             }
         });
 
+        String textStr = String.format("%s \"%s\" action",
+                Labels.PRESS_NEW_KEY_FOR, controlText);
+        Label textLabel = new Label(textStr, game.getGraphics().getSkin());
+        textLabel.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                disableKeyboardInput(group);
+            }
+        });
+
         Table textTable = new Table(game.getGraphics().getSkin());
         textTable.setPosition(screenWidth / 2, screenHeight / 2);
-        textTable.add(String.format("%s \"%s\"", Labels.PRESS_NEW_KEY_FOR, controlText));
+        textTable.add(textLabel);
 
         group.addActor(darkBack);
         group.addActor(textTable);
