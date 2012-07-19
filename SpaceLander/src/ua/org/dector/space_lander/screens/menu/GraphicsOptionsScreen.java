@@ -76,6 +76,7 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
 
         sbxDisplayModes = new SelectBox(screenModes, skin);
         sbxDisplayModes.setSelection(currentScreenMode.toString());
+        sbxDisplayModes.setVisible(fullscreen);
         sbxDisplayModes.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -99,6 +100,7 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
                 soundManager.play(LanderSounds.MENU_CLICK);
 
                 fullscreen = chkFullscreen.isChecked();
+                sbxDisplayModes.setVisible(fullscreen);
 
                 setChanged();
             }
@@ -113,11 +115,11 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
                 settings.setScreenWidth(currentScreenMode.getWidth());
                 settings.setScreenHeight(currentScreenMode.getHeight());
                 settings.setFullscreen(fullscreen);
-
                 ScreenMode.setUp(currentScreenMode, fullscreen);
 
                 changed = false;
                 btnBack.setText(Labels.OPTIONS$BACK);
+                btnSave.setVisible(false);
             }
         });
 

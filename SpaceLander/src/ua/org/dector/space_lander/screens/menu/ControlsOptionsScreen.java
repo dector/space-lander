@@ -279,7 +279,6 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
     private void disableKeyboardInput(Group group) {
         group.addAction(Actions.removeActor());
         getStage().setKeyboardFocus(null);
-        
     }
 
     static enum Control {
