@@ -28,7 +28,6 @@
 
 package ua.org.dector.space_lander.screens.menu;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -129,7 +128,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
         lblMusicVolume = new Label("", skin);
         updateMusicVolumeLabel();
 
-        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave = new TextButton(Labels.SAVE, skin);
         btnSave.setVisible(false);
         btnSave.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
@@ -145,11 +144,11 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
 
                 changed = false;
                 btnSave.setVisible(false);
-                btnBack.setText(Labels.OPTIONS$BACK);
+                btnBack.setText(Labels.BACK);
             }
         });
 
-        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack = new TextButton(Labels.BACK, skin);
         btnBack.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -210,7 +209,7 @@ public class AudioOptionsScreen extends TableScreen<Lander> {
 
         changed = true;
         btnSave.setVisible(true);
-        btnBack.setText(Labels.OPTIONS$CANCEL);
+        btnBack.setText(Labels.CANCEL);
     }
 
     public void render(float delta) {

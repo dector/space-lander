@@ -34,11 +34,14 @@ package ua.org.dector.space_lander.constants;
 public interface Labels {
     public static final String TITLE = "Space Lander";
 
-    public static final String OPTIONS$OPTIONS      = "Options";
-    public static final String OPTIONS$EXIT         = "Exit";
-    public static final String OPTIONS$SAVE         = "Save";
-    public static final String OPTIONS$BACK         = "Back";
-    public static final String OPTIONS$CANCEL       = "Cancel";
+    public static final String PLAY     = "Play";
+    public static final String NEW_GAME = "New";
+    public static final String OPTIONS  = "Options";
+    public static final String EXIT     = "Exit";
+
+    public static final String SAVE     = "Save";
+    public static final String BACK     = "Back";
+    public static final String CANCEL   = "Cancel";
 
     public static final String OPTIONS$AUDIO        = "Audio";
     public static final String OPTIONS$GRAPHICS     = "Graphics";

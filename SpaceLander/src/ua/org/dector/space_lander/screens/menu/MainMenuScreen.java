@@ -28,8 +28,6 @@
 
 package ua.org.dector.space_lander.screens.menu;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -37,7 +35,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.managers.MusicManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
@@ -63,7 +60,16 @@ public class MainMenuScreen extends TableScreen<Lander> {
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-        Button btnOptions = new TextButton(Labels.OPTIONS$OPTIONS, skin);
+        Button btnPlay = new TextButton(Labels.PLAY, skin);
+        btnPlay.addListener(new ClickListener() {
+            public void clicked(ActorEvent event, float x, float y) {
+                soundManager.play(LanderSounds.MENU_CLICK);
+
+                game.setScreen(new PlayScreen(game));
+            }
+        });
+
+        Button btnOptions = new TextButton(Labels.OPTIONS, skin);
         btnOptions.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -72,7 +78,7 @@ public class MainMenuScreen extends TableScreen<Lander> {
             }
         });
 
-        Button btnExit = new TextButton(Labels.OPTIONS$EXIT, skin);
+        Button btnExit = new TextButton(Labels.EXIT, skin);
         btnExit.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -82,6 +88,9 @@ public class MainMenuScreen extends TableScreen<Lander> {
         });
 
         table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE);
+        table.row();
+        table.add(btnPlay).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+                spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
         table.add(btnOptions).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
                 spaceBottom(BOTTOM_SPACE).fill().uniform();

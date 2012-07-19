@@ -38,49 +38,55 @@ import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.space_lander.Lander;
 import ua.org.dector.space_lander.constants.Labels;
+import ua.org.dector.space_lander.constants.LanderMusic;
 import ua.org.dector.space_lander.constants.LanderSounds;
 
+import static com.badlogic.gdx.Input.Keys;
 import static ua.org.dector.space_lander.constants.UISizes.*;
 
 /**
  * @author dector (dector9@gmail.com)
  */
-public class OptionsScreen extends TableScreen<Lander> {
-    public OptionsScreen(Lander lander) {
+public class PlayScreen extends TableScreen<Lander> {
+    private static final int PROFILES_NUM = 4;
+
+    public PlayScreen(Lander lander) {
         super(lander);
     }
 
     public void show() {
         final SoundManager soundManager = game.getSoundManager();
 
+        game.getMusicManager().play(LanderMusic.MENU, true);
+
         Skin skin = game.getGraphics().getSkin();
         Table table = getTable();
 
-        Button btnAudio     = new TextButton(Labels.OPTIONS$AUDIO, skin);
-        btnAudio.addListener(new ClickListener() {
+        Button btnNewGame = new TextButton(Labels.NEW_GAME, skin);
+        btnNewGame.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
 
-                game.setScreen(new AudioOptionsScreen(game));
+                // Play new game
+//                game.setScreen();
             }
         });
 
-        Button btnGraphics  = new TextButton(Labels.OPTIONS$GRAPHICS, skin);
-        btnGraphics.addListener(new ClickListener() {
-            public void clicked(ActorEvent event, float x, float y) {
-                soundManager.play(LanderSounds.MENU_CLICK);
+        Button[] btnProfiles = new Button[PROFILES_NUM];
+        for (int i = 0; i < PROFILES_NUM; i++) {
+            // TODO get profile name
+            Button btnProfile = new TextButton("Profile #" + i, skin);
+            btnProfile.addListener(new ClickListener() {
+                public void clicked(ActorEvent event, float x, float y) {
+                    soundManager.play(LanderSounds.MENU_CLICK);
 
-                game.setScreen(new GraphicsOptionsScreen(game));
-            }
-        });
-        Button btnControls  = new TextButton(Labels.OPTIONS$CONTROLS, skin);
-        btnControls.addListener(new ClickListener() {
-            public void clicked(ActorEvent event, float x, float y) {
-                soundManager.play(LanderSounds.MENU_CLICK);
+                    // Play with selected profile
+//                    game.setScreen();
+                }
+            });
 
-                game.setScreen(new ControlsOptionsScreen(game));
-            }
-        });
+            btnProfiles[i] = btnProfile;
+        }
 
         Button btnBack = new TextButton(Labels.BACK, skin);
         btnBack.addListener(new ClickListener() {
@@ -91,18 +97,26 @@ public class OptionsScreen extends TableScreen<Lander> {
             }
         });
 
-        table.add(Labels.OPTIONS).spaceBottom(TITLE_BOTTOM_SPACE).uniform();
+        table.add(Labels.TITLE).spaceBottom(TITLE_BOTTOM_SPACE);
         table.row();
-        table.add(btnGraphics).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+        table.add(btnNewGame).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
                 spaceBottom(BOTTOM_SPACE).fill().uniform();
         table.row();
-        table.add(btnAudio).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BOTTOM_SPACE).fill().uniform();
-        table.row();
-        table.add(btnControls).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
-                spaceBottom(BOTTOM_SPACE).fill().uniform();
-        table.row();
-        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT)
-                .fill().uniform();
+
+        for (Button btnProfile : btnProfiles) {
+            table.add(btnProfile).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).
+                    spaceBottom(BOTTOM_SPACE).fill().uniform();
+            table.row();
+        }
+
+        table.add(btnBack).size(BUTTONS_WIDTH, BUTTONS_HEIGHT).fill().uniform();
+    }
+
+    public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case Keys.ESCAPE: game.exit(); break;
+        }
+
+        return true;
     }
 }

@@ -28,7 +28,6 @@
 
 package ua.org.dector.space_lander.screens.menu;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ActorEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -106,7 +105,7 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
             }
         });
 
-        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave = new TextButton(Labels.SAVE, skin);
         btnSave.setVisible(false);
         btnSave.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
@@ -118,12 +117,12 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
                 ScreenMode.setUp(currentScreenMode, fullscreen);
 
                 changed = false;
-                btnBack.setText(Labels.OPTIONS$BACK);
+                btnBack.setText(Labels.BACK);
                 btnSave.setVisible(false);
             }
         });
 
-        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack = new TextButton(Labels.BACK, skin);
         btnBack.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -154,6 +153,6 @@ public class GraphicsOptionsScreen extends TableScreen<Lander> {
 
         changed = true;
         btnSave.setVisible(true);
-        btnBack.setText(Labels.OPTIONS$CANCEL);
+        btnBack.setText(Labels.CANCEL);
     }
 }

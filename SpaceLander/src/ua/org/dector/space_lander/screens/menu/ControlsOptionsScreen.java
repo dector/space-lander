@@ -38,7 +38,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.common.Settings;
 import ua.org.dector.gcore.game.TableScreen;
-import ua.org.dector.gcore.managers.PreferencesManager;
 import ua.org.dector.gcore.managers.SoundManager;
 import ua.org.dector.gcore.utils.Utils;
 import ua.org.dector.space_lander.Lander;
@@ -139,7 +138,7 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
 
         ScrollPane controlsPane = new ScrollPane(controlsTable);
 
-        btnSave = new TextButton(Labels.OPTIONS$SAVE, skin);
+        btnSave = new TextButton(Labels.SAVE, skin);
         btnSave.setVisible(false);
         btnSave.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
@@ -155,11 +154,11 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
 
                 changed = false;
                 btnSave.setVisible(false);
-                btnBack.setText(Labels.OPTIONS$BACK);
+                btnBack.setText(Labels.BACK);
             }
         });
 
-        btnBack = new TextButton(Labels.OPTIONS$BACK, skin);
+        btnBack = new TextButton(Labels.BACK, skin);
         btnBack.addListener(new ClickListener() {
             public void clicked(ActorEvent event, float x, float y) {
                 soundManager.play(LanderSounds.MENU_CLICK);
@@ -186,7 +185,7 @@ public class ControlsOptionsScreen extends TableScreen<Lander> {
 
         changed = true;
         btnSave.setVisible(true);
-        btnBack.setText(Labels.OPTIONS$CANCEL);
+        btnBack.setText(Labels.CANCEL);
     }
 
     private static String getKeyString(int key) {
