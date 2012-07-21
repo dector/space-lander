@@ -36,7 +36,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.org.dector.gcore.game.TableScreen;
 import ua.org.dector.gcore.managers.SoundManager;
+import ua.org.dector.gcore.models.Profile;
 import ua.org.dector.space_lander.Lander;
+import ua.org.dector.space_lander.constants.Directories;
 import ua.org.dector.space_lander.constants.Labels;
 import ua.org.dector.space_lander.constants.LanderMusic;
 import ua.org.dector.space_lander.constants.LanderSounds;
@@ -48,8 +50,6 @@ import static ua.org.dector.space_lander.constants.UISizes.*;
  * @author dector (dector9@gmail.com)
  */
 public class PlayScreen extends TableScreen<Lander> {
-    private static final int PROFILES_NUM = 4;
-
     public PlayScreen(Lander lander) {
         super(lander);
     }
@@ -72,10 +72,14 @@ public class PlayScreen extends TableScreen<Lander> {
             }
         });
 
-        Button[] btnProfiles = new Button[PROFILES_NUM];
-        for (int i = 0; i < PROFILES_NUM; i++) {
+        game.getProfileManager().loadFromFiles(Directories.PROFILES);
+        Profile[] profiles = game.getProfileManager().getProfiles();
+        int profilesCount = profiles.length;
+
+        Button[] btnProfiles = new Button[profilesCount];
+        for (int i = 0; i < profilesCount; i++) {
             // TODO get profile name
-            Button btnProfile = new TextButton("Profile #" + i, skin);
+            Button btnProfile = new TextButton(profiles[i].getName(), skin);
             btnProfile.addListener(new ClickListener() {
                 public void clicked(ActorEvent event, float x, float y) {
                     soundManager.play(LanderSounds.MENU_CLICK);

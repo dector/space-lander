@@ -39,4 +39,5 @@ public interface Directories {
     public static final String MUSIC    = DATA + "music/";
     public static final String PARTICLES= DATA + "particles/";
     public static final String SKINS    = DATA + "skins/";
+    public static final String PROFILES = DATA + "profiles/";
 }

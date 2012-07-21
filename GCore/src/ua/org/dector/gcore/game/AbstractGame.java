@@ -31,6 +31,7 @@ package ua.org.dector.gcore.game;
 import com.badlogic.gdx.Game;
 import ua.org.dector.gcore.core.Graphics;
 import ua.org.dector.gcore.core.GraphicsImpl;
+import ua.org.dector.gcore.managers.ProfileManager;
 import ua.org.dector.gcore.utils.ResourceLoader;
 import ua.org.dector.gcore.managers.MusicManager;
 import ua.org.dector.gcore.managers.SoundManager;
@@ -44,16 +45,18 @@ public abstract class AbstractGame extends Game {
     private SoundManager soundManager;
     private MusicManager musicManager;
     private ResourceLoader resourceLoader;
+    private ProfileManager profileManager;
 
-    private Graphics g;
+    private Graphics graphics;
 
     public void create() {
         resourceLoader = new ResourceLoader();
+        profileManager = new ProfileManager();
 
         soundManager = new SoundManager(resourceLoader);
         musicManager = new MusicManager(resourceLoader);
 
-        g = new GraphicsImpl(this);
+        graphics = new GraphicsImpl(this);
     }
 
     public SoundManager getSoundManager() {
@@ -69,13 +72,17 @@ public abstract class AbstractGame extends Game {
     }
 
     public Graphics getGraphics() {
-        return g;
+        return graphics;
+    }
+
+    public ProfileManager getProfileManager() {
+        return profileManager;
     }
 
     public void dispose() {
         super.dispose();
 
-        g.dispose();
+        graphics.dispose();
 
         musicManager.dispose();
         soundManager.dispose();
