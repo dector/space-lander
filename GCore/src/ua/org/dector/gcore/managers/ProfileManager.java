@@ -2,9 +2,11 @@ package ua.org.dector.gcore.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
 import ua.org.dector.gcore.models.Profile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,11 +25,20 @@ public class ProfileManager {
 
     public void loadFromFiles(String profilesDir) {
         FileHandle profDir = Gdx.files.internal(profilesDir);
+        if (! profDir.exists() || ! profDir.isDirectory()) return;
+        
         FileHandle[] profiles = profDir.list();
 
         createProfilesStorage(profiles.length);
-        for (FileHandle profile : profiles) {
-            addProfile(Profile.fromFile(profile));
+
+        Json json;
+        FileHandle profile;
+        // TODO find other way to sort filenames
+        // Reversing
+        for (int i = profiles.length - 1; i >= 0; i--) {
+            profile = profiles[i];
+            json = new Json();
+            addProfile(json.fromJson(Profile.class, profile));
         }
     }
 

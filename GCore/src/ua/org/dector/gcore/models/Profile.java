@@ -15,13 +15,4 @@ public class Profile {
     public void setName(String name) {
         this.name = name;
     }
-
-    public static Profile fromFile(FileHandle file) {
-        Profile profile = new Profile();
-
-        // TODO Mock
-        profile.setName(file.readString());
-
-        return profile;
-    }
 }
